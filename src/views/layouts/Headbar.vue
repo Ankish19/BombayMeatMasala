@@ -1,7 +1,7 @@
 <template>
 <div>
     <!-- Header -->
-    <header id="header" class="light">
+    <header id="header" class="dark">
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
@@ -15,35 +15,32 @@
                      <!--Navigation-->
                     <nav class="module module-navigation left">
                         <ul id="nav-main" class="nav nav-main">
-                            <!--<li class="has-dropdown">
-                                <router-link to="/">Home</router-link>
-                            </li>
-                            <li class="has-dropdown">
-                                <router-link to="/about">About</router-link>
-                            </li>-->
                             <li class="has-dropdown text-left mr-3">
                                 <router-link to="/">Menu</router-link>
                             </li>
-                            <!--<li class="has-dropdown">
-                                <router-link to="/contact">Contact Us</router-link>
-                            </li>-->
+                            <li class="hidden-md">
+                            <router-link class="has-dropdown text-left mr-3" to="/login" v-if="!user">
+                            <span class="order">Login</span></router-link>
+                        <router-link class="has-dropdown text-left mr-3" to="/myaccount" v-if="user">
+                            <span class="order">My Account</span></router-link>
+                            </li>
                         </ul>
                     </nav>
                     <div class="module left">
-                        <router-link class="btn btn-outline-secondary" to="/login" v-if="!user">
+                        <router-link class="btn btn-outline-light" to="/login" v-if="!user">
                             <span class="order">Login</span></router-link>
-                        <router-link class="btn btn-outline-secondary" to="/myaccount" v-if="user">
+                        <router-link class="btn btn-outline-light" to="/myaccount" v-if="user">
                             <span class="order">My Account</span></router-link>
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <a href="#" class="module module-cart right" data-toggle="panel-cart" @click="slideMinicart(classSlider)">
+                    <router-link to="/checkout" class="module module-cart right">
                         <span class="cart-icon">
                             <i class="ti ti-shopping-cart"></i>
                             <span class="notification d-block">{{ item?item.length:0 }}</span>
                         </span>
                         <span class="cart-value">$<span>{{ orderTotal.toFixed(2) }}</span></span>
-                    </a>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -51,7 +48,7 @@
     <!-- Header / End -->
 
     <!-- Header -->
-    <header id="header-mobile" class="light">
+    <header id="header-mobile" class="dark">
         <div class="module module-nav-toggle">
             <a href="#" id="nav-toggle" data-toggle="panel-mobile" ><span></span><span></span><span></span><span></span></a>
         </div>
@@ -72,13 +69,14 @@
     <!-- Panel Mobile -->
     <nav id="panel-mobile" class="">
         <div class="module module-logo bg-dark dark">
-            <a href="#">
+         <router-link to="/">
                 <img src="@/assets/logo.png" alt="" width="100px" height="100px"/>
-            </a>
+            </router-link>
             <button class="close" data-toggle="panel-mobile">
                 <i class="ti ti-close"></i>
             </button>
         </div>
+
         <nav class="module module-navigation"></nav>
         <div class="module module-social">
             <h6 class="text-sm mb-3">Follow Us!</h6>
@@ -291,11 +289,19 @@ input#mce-EMAIL {
 #header .module-logo {
     right: 0px;
     padding: 0rem 0rem !important;
-    width: 100px;
+    width: 0px !important;
 }
 .main-logo {
     height: 96px;
     padding-top: 3px;
     margin-left: 50%;
+}
+.hidden-md{
+  display: none;
+}
+@media screen and (max-width: 745px) {
+  .hidden-md{
+  display: block !important;
+}
 }
 </style>

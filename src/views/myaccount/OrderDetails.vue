@@ -6,7 +6,7 @@
     <div class="page-title">
       <div class="container">
         <div class="row">
-          <div class="col-lg-12">
+          <div class="col-lg-12 mt-6">
             <h1 class="mb-0">Orders Details</h1>
             <h4 class="text-muted mb-0">
               Some informations about our restaurant

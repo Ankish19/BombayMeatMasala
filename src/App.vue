@@ -13,6 +13,23 @@
   color: #2c3e50;
 }
 
+.page-title {
+   height: 250px;
+}
+.col-lg-12.mt-6 {
+    margin-top: 57px;
+}
+
+@media screen and (max-width: 375px) {
+  .col-lg-12.mt-6 {
+    margin-top: 86px !important;
+}
+}
+.section, section {
+    position: relative;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
 #nav {
   padding: 30px;
 
@@ -24,5 +41,8 @@
       color: #42b983;
     }
   }
+}
+.hidden-md{
+  display: none;
 }
 </style>

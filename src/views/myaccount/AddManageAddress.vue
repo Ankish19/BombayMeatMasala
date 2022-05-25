@@ -64,15 +64,8 @@
               </h4>
               <div class="row mb-5">
                 <div class="col-md-6">
-                  <div ref="mapDiv" style="width: 100%; height: 61vh" />
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d18876468.20030772!2d-113.72221585646197!3d54.7227051740391!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4b0d03d337cc6ad9%3A0x9968b72aa2438fa5!2sCanada!5e0!3m2!1sen!2sin!4v1640674008590!5m2!1sen!2sin"
-                    width="100%"
-                    height="450"
-                    style="border: 0"
-                    allowfullscreen=""
-                    loading="lazy"
-                  ></iframe>
+                  <div ref="mapDiv" style="width: 100%; height: 400px" />
+
                 </div>
                 <div class="col-md-6">
                 <validation-observer ref="addressValidate">
@@ -100,8 +93,8 @@
                   </b-form-group>
                         <div class="display-list mt-1">
                           <p>
-                            <a href="#"
-                              ><i class="fa fa-location-arrow" aria-hidden="true"></i>
+                            <a
+                              @click="currentLoc" class="cursor-pointer"><i class="fa fa-location-arrow" aria-hidden="true"></i>
                               Use My Current Location</a
                             >
                           </p>
@@ -115,11 +108,20 @@
                     </div>
                       <b-form-input
                         type="text"
+                        id="location"
+                        class="form-control"
+                        v-model="form.address"
+                        placeholder="Location"
+                      />
+                      <div class="input-group mt-2">
+                      <b-form-input
+                        type="text"
                         id="house"
                         class="form-control"
                         v-model="form.house"
                         placeholder="Full Address"
                       />
+                      </div>
                     <div class="input-group mt-2">
                       <select
                         class="form-control form-select"
@@ -136,6 +138,7 @@
                         <span>Save Address</span>
                       </button>
                     </div>
+                    <span class="text-danger" v-if="error">{{ error }}</span>
                   </div>
                   <!-- /input-group -->
                   </b-form>
@@ -153,7 +156,6 @@
   </div>
 </template>
 <script>
-import { ref, onMounted } from 'vue'
 import VueGoogleAutocomplete from 'vue-google-autocomplete'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { Loader } from '@googlemaps/js-api-loader'
@@ -161,6 +163,7 @@ import Headbar from '@/views/layouts/Headbar.vue'
 import Footer from '@/views/layouts/Footer.vue'
 import SildeBar from '@/views/myaccount/SildeBar.vue'
 import { saveAddress } from '@/store/api'
+import axios from 'axios'
 import { required } from 'validations'
 import {
   BForm,
@@ -169,40 +172,7 @@ import {
 } from 'bootstrap-vue'
 
 export default {
-  setup () {
-    const GOOGLE_MAPS_API_KEY = 'AIzaSyBLVIcbGHiO0lFwfgZgKBx9UlSz_yrl_IU'
-    const loader = new Loader({ apiKey: GOOGLE_MAPS_API_KEY })
-    // const directionsService = new window.google.maps.DirectionsService();
-    const directionsRenderer = new window.google.maps.DirectionsRenderer()
-    const map = ref(null)
-    const mapDiv = ref(null)
-
-    onMounted(async () => {
-      console.log('load map')
-      await loader.load()
-      map.value = new window.google.maps.Map(mapDiv.value, {
-        center: { lat: 54.78122724085885, lng: -125.01301671032266 },
-        // center: { lat: 51.033332421752895, lng: -114.07961939718315 },
-        // center: currPos.value,
-        zoom: 10
-      })
-      directionsRenderer.setMap(map.value)
-    })
-
-    return { mapDiv }
-  },
-  data () {
-    return {
-      form: {
-        house: '',
-        address: '',
-        search: '',
-        tag: '',
-        required
-      }
-    }
-  },
-  created () {},
+  name: 'AddManageAddress',
   components: {
     Headbar,
     Footer,
@@ -215,25 +185,94 @@ export default {
     ValidationProvider,
     ValidationObserver
   },
+  data () {
+    return {
+      form: {
+        house: '',
+        address: '',
+        search: '',
+        tag: '',
+        required
+      },
+      error: '',
+      lat: '',
+      lng: '',
+      map: null
+    }
+  },
+  mounted () {
+    this.showMap()
+  },
   methods: {
+    currentLoc () {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.showPosition)
+      } else {
+        this.error = 'Geolocation is not supported.'
+      }
+    },
+    showPosition (position) {
+      this.form.latitude = position.coords.latitude
+      this.form.longitude = position.coords.longitude
+
+      const marker = new window.google.maps.Marker({
+        position: { lat: this.form.latitude, lng: this.form.longitude }
+      })
+      marker.setMap(this.map)
+
+      this.getCurrentLoc(this.form.latitude, this.form.longitude)
+    },
+    async showMap () {
+      const directionsRenderer = new window.google.maps.DirectionsRenderer()
+      const GOOGLE_MAPS_API_KEY = 'AIzaSyBLVIcbGHiO0lFwfgZgKBx9UlSz_yrl_IU'
+      const loader = new Loader({ apiKey: GOOGLE_MAPS_API_KEY })
+      const mapDiv = this.$refs.mapDiv
+      await loader.load()
+      this.map = new window.google.maps.Map(mapDiv, {
+        center: { lat: 51.033332421752895, lng: -114.07961939718315 },
+        // center: currPos.value,
+        zoom: 10
+      })
+      directionsRenderer.setMap(this.map)
+    },
+    getCurrentLoc (lat, lng) {
+      axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBLVIcbGHiO0lFwfgZgKBx9UlSz_yrl_IU`).then(res => {
+        let loc = ''
+        res.data.results.filter(function (item) {
+          if (item.types[0] === 'route') {
+            loc = item.formatted_address
+          }
+        })
+        // document.getElementById('currentLocation').innerHTML = loc;
+        this.form.address = loc
+      })
+    },
     getAddressData (addressData, placeResultData) {
       this.form.address = placeResultData.formatted_address
       this.form.longitude = addressData.longitude
       this.form.latitude = addressData.latitude
     },
     address () {
-      this.$refs.addressValidate.validate().then(success => {
-        if (success) {
-          saveAddress(this.form).then(res => {
-            console.log(res.data)
-          }).catch((err) => {
-            console.log(err)
-          })
-        }
-      })
+      this.error = ''
+      if (!this.form.house || !this.form.address || !this.form.tag) {
+        this.error = 'All fields are required.'
+        this.$toast.error('All fields are required.')
+      } if (this.error === '') {
+        saveAddress(this.form).then(res => {
+          console.log(res.data)
+          this.$toast.success('New address successfully')
+          if (localStorage.getItem('page') === 'checkout') {
+            localStorage.removeItem('page')
+            this.$router.push('/checkout')
+          } else {
+            this.$router.push('/manageaddress')
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
     }
-  },
-  name: 'checkout'
+  }
 }
 </script>
 <style>
@@ -259,5 +298,8 @@ a.text-left.active {
   font-size: 18px;
   font-weight: 700;
   margin-top: 8px;
+}
+.cursor-pointer{
+  cursor: pointer !important;
 }
 </style>

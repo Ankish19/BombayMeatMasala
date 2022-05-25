@@ -77,8 +77,24 @@
             <button class="close" data-toggle="panel-mobile">
                 <i class="ti ti-close"></i>
             </button>
+
         </div>
-        <nav class="module module-navigation"></nav>
+        <nav class="module module-navigation left">
+        <ul id="nav-main" class="nav nav-main ">
+                            <li class="linknavbar">
+                                <router-link to="/">Home</router-link>
+                            </li>
+                            <li class="linknavbar">
+                                <router-link to="/about">About</router-link>
+                            </li>
+                            <li class="linknavbar">
+                                <router-link to="/menu">Menu</router-link>
+                            </li>
+                            <li class="linknavbar">
+                                <router-link to="/contact">Contact Us</router-link>
+                            </li>
+                        </ul>
+        </nav>
         <div class="module module-social">
             <h6 class="text-sm mb-3">Follow Us!</h6>
             <a href="#" class="icon icon-social icon-circle icon-sm icon-facebook"><i class="fa fa-facebook"></i></a>

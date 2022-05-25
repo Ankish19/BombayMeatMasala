@@ -1,108 +1,24 @@
 <template>
   <div id="footer">
-    <!-- Footer
+    <!-- Footer -->
     <footer id="footer" class="bg-dark dark">
       <div class="container">
-         Footer 1st Row
-        <div class="footer-first-row row">
-          <div class="col-lg-3 text-center">
-            <a href="#">
-              <img alt="Vue logo" class="footer-logo" src="@/assets/logo.svg"
-            /></a>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <h5 class="text-muted">Latest news</h5>
-            <ul class="list-posts">
-              <li>
-                <a href="#" class="title"
-                  >How to create effective webdeisign?</a
-                >
-                <span class="date">February 14, 2015</span>
-              </li>
-              <li>
-                <a href="#" class="title"
-                  >Awesome weekend in Polish mountains!</a
-                >
-                <span class="date">February 14, 2015</span>
-              </li>
-              <li>
-                <a href="#" class="title"
-                  >How to create effective webdeisign?</a
-                >
-                <span class="date">February 14, 2015</span>
-              </li>
-            </ul>
-          </div>
-          <div class="col-lg-5 col-md-6">
-            <h5 class="text-muted">Subscribe Us!</h5>
-             MailChimp Form
-            <form
-              action="//suelo.us12.list-manage.com/subscribe/post-json?u=ed47dbfe167d906f2bc46a01b&amp;id=24ac8a22ad"
-              id="sign-up-form"
-              class="sign-up-form validate-form mb-5"
-              method="POST"
-            >
-              <div class="input-group form-footer">
-                <input
-                  name="EMAIL"
-                  id="mce-EMAIL"
-                  type="email"
-                  class="form-control"
-                  placeholder="Tap your e-mail..."
-                  required
-                />
-                <span class="input-group-btn">
-                  <button class="btn btn-footer btn-submit" type="submit">
-                    <span class="description">Subscribe</span>
-                    <span class="success">
-                      <svg x="0px" y="0px" viewBox="0 0 32 32">
-                        <path
-                          stroke-dasharray="19.79 19.79"
-                          stroke-dashoffset="19.79"
-                          fill="none"
-                          stroke="#FFFFFF"
-                          stroke-width="2"
-                          stroke-linecap="square"
-                          stroke-miterlimit="10"
-                          d="M9,17l3.9,3.9c0.1,0.1,0.2,0.1,0.3,0L23,11"
-                        />
-                      </svg>
-                    </span>
-                    <span class="error">Try again...</span>
-                  </button>
-                </span>
-              </div>
-            </form>
-            <h5 class="text-muted mb-3">Social Media</h5>
-            <a
-              href="#"
-              class="icon icon-social icon-circle icon-sm icon-facebook"
-              ><i class="fa fa-facebook"></i
-            ></a>
-            <a href="#" class="icon icon-social icon-circle icon-sm icon-google"
-              ><i class="fa fa-google"></i
-            ></a>
-            <a
-              href="#"
-              class="icon icon-social icon-circle icon-sm icon-instagram"
-              ><i class="fa fa-instagram"></i
-            ></a>
-          </div>
-        </div>
-        Footer 2nd Row
+        <!-- Footer 1nd Row -->
         <div class="footer-second-row">
-          <span class="text-muted"
-            >Copyright Tandoori Night 2022 ©. Made with love by Tng Websolutions.</span
-          >
+        <div class="row">
+        <div class="col-md-12"> <span class="text-light text-center"
+            >2022 © Copyright <a href="#" style="color:orange">Bombay Meat Masala.</a> Made with love by <a href="https://tngwebsolutions.ca/" target="_blank" style="color:orange">T&G Web Solutions.</a></span
+          ></div>
+        </div>
         </div>
       </div>
 
-       Back To Top
+      <!-- Back To Top -->
       <button id="back-to-top" class="back-to-top">
         <i class="ti ti-angle-up"></i>
       </button>
     </footer>
-    Footer / End -->
+    <!-- Footer / End -->
 
     <!-- Modal / Product -->
     <div class="modal fade product-modal" id="product-modal" role="dialog">
@@ -321,7 +237,7 @@
     <nav id="panel-mobile">
       <div class="module module-logo bg-dark dark">
         <a href="#">
-          <img src="assets/img/logo-light.svg" alt="" width="88" />
+          <img src="@/assets/logo.png" alt="" width="88" />
         </a>
         <button class="close" data-toggle="panel-mobile">
           <i class="ti ti-close"></i>
@@ -330,19 +246,10 @@
       <nav class="module module-navigation"></nav>
       <div class="module module-social">
         <h6 class="text-sm mb-3">Follow Us!</h6>
-        <a href="#" class="icon icon-social icon-circle icon-sm icon-facebook"
+        <a href="https://www.facebook.com/sizzlinggrill.ca" class="icon icon-social icon-circle icon-sm icon-facebook"
           ><i class="fa fa-facebook"></i
         ></a>
-        <a href="#" class="icon icon-social icon-circle icon-sm icon-google"
-          ><i class="fa fa-google"></i
-        ></a>
-        <a href="#" class="icon icon-social icon-circle icon-sm icon-twitter"
-          ><i class="fa fa-twitter"></i
-        ></a>
-        <a href="#" class="icon icon-social icon-circle icon-sm icon-youtube"
-          ><i class="fa fa-youtube"></i
-        ></a>
-        <a href="#" class="icon icon-social icon-circle icon-sm icon-instagram"
+        <a href="https://www.instagram.com/sizzlinggrill.ca/" class="icon icon-social icon-circle icon-sm icon-instagram"
           ><i class="fa fa-instagram"></i
         ></a>
       </div>
@@ -391,7 +298,7 @@ export default {
 .footer_cart {
   position: fixed;
     bottom: 40px;
-    right: 40px;
+    left: 80px;
     padding: 10px 17px;
     border: 2px solid #e26f2f;
     border-radius: 50px;
@@ -420,6 +327,14 @@ button.btn.btn-footer.btn-submit {
   border-radius: 0px;
 }
 .footer-logo {
-  width: 220px;
+  width: 130px;
+}
+.icon.icon-circle.icon-facebook:focus, .icon.icon-circle.icon-facebook:hover {
+    color: #fff;
+    background-color: #ddae71;
+}
+.icon.icon-circle.icon-instagram:focus, .icon.icon-circle.icon-instagram:hover {
+    color: #fff;
+    background-color: #ddae71;
 }
 </style>

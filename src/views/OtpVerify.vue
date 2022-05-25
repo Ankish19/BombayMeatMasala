@@ -7,7 +7,7 @@
       <div class="page-title bg-light">
         <div class="container">
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 mt-6">
               <h1 class="mb-0">OTP Verify</h1>
               <h4 class="text-muted mb-0">
                 Some information about our restaurant
@@ -22,7 +22,8 @@
         <b-container>
             <b-form @submit.prevent="verOtp">
             <b-row>
-              <b-col cols="6" class="mx-auto">
+              <b-col cols="12"  md="6" class="mx-auto  text-center">
+                <h4>Verification send on your email</h4>
                 <b-col cols="12">
                   <b-form-group>
                     <b-form-group>
@@ -38,13 +39,22 @@
                     <b-button class="w-100" type="submit"><span>Verify OTP</span></b-button>
                   </b-form-group>
                 </b-col>
-                <b-col cols="12" class="text-right">
+                <b-row>
+                <b-col cols="6" class="text-left">
                   <p class="pd-a1">
-                    <router-link to="#"
-                      @click="resend_otp"><strong>Resend Code </strong></router-link
+                    <span
+                      @click="logout"><strong>Login another account </strong></span
                     >
                   </p>
                 </b-col>
+                <b-col cols="6" class="text-right">
+                  <p class="pd-a1">
+                    <span
+                      @click="resend_otp"><strong>Resend Code </strong></span
+                    >
+                  </p>
+                </b-col>
+                </b-row>
               </b-col>
             </b-row>
           </b-form>
@@ -57,7 +67,7 @@
 <script>
 import Headbar from '@/views/layouts/Headbar.vue'
 import Footer from '@/views/layouts/Footer.vue'
-import { getLocalStorage } from '@/store/service'
+import { getLocalStorage, saveLocalStorage } from '@/store/service'
 import { verifyOtp, resendVerifyOtp } from '@/store/api'
 import {
   BForm,
@@ -69,7 +79,7 @@ import {
   BContainer
 } from 'bootstrap-vue'
 export default {
-  name: 'Login',
+  name: 'OtpVerify',
   components: {
     Headbar,
     Footer,
@@ -94,16 +104,26 @@ export default {
     verOtp () {
       verifyOtp(this.form).then(res => {
         if (res.data.valid_otp === true) {
+          saveLocalStorage('userDataVerify', 'true')
+          const userData = getLocalStorage('userData')
+          userData.verified_at = new Date()
+          saveLocalStorage('userData', JSON.stringify(userData))
           this.$router.push('/myaccount')
         } else {
-          console.log('otp invalid')
+          this.$toast.error('Invalid Otp')
         }
       })
     },
     resend_otp () {
       resendVerifyOtp(this.form).then(res => {
-        console.log(res.dat)
+        this.$toast.success('Send resend otp successfully')
       })
+    },
+    logout () {
+      localStorage.removeItem('userData')
+      localStorage.removeItem('cart')
+      localStorage.removeItem('userDataVerify')
+      this.$router.push('/')
     }
   }
 }

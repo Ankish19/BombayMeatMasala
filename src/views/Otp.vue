@@ -7,7 +7,7 @@
        <div class="page-title bg-light">
         <div class="container">
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 mt-6">
               <h1 class="mb-0">OTP With Login</h1>
               <h4 class="text-muted mb-0">
                 Some informations about our restaurant
@@ -22,7 +22,7 @@
         <b-container>
           <b-form @submit.prevent="userOtp">
             <b-row>
-              <b-col cols="6" class="mx-auto">
+              <b-col cols="12"  md="6" class="mx-auto">
                 <b-col cols="12">
                   <b-form-group>
                     <b-form-group>

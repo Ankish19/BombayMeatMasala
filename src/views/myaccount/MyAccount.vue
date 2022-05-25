@@ -5,10 +5,10 @@
     <div class="page-title">
       <div class="container">
         <div class="row">
-          <div class="col-lg-12">
+          <div class="col-lg-12 mt-6">
             <h1 class="mb-0">My Account</h1>
             <h4 class="text-muted mb-0">
-              Some informations about our restaurant
+              Some information about our restaurant
             </h4>
           </div>
         </div>
@@ -61,10 +61,10 @@
               </h4>
               <div class="row mb-5">
               <div class="col-md-12">
-                 <div class="blog-details-wrap ptb-100">
+                 <div class="">
       <div class="container">
         <div class="row gx-5">
-          <div class="col-lg-12 order-xl-2 order-lg-1 order-md-1 order-1">
+          <div class="col-lg-12">
             <div class="card mb-4">
               <div class="card-body text-center">
                 <img
@@ -78,23 +78,23 @@
                   <i class="fa fa-map-marker" aria-hidden="true"></i> {{ user.default_address?user.default_address.address:'' }}
                 </p>
                 <p class="text-muted mb-2">
-                  <a href="tel:4434567890"><i class="fa fa-phone" aria-hidden="true"></i> {{ user?user.phone:'' }}</a>
+                  <a href="#"><i class="fa fa-phone" aria-hidden="true"></i> {{ user?user.phone:'' }}</a>
                 </p>
                 <p class="text-muted mb-4">
-                  <a href="mailto:User@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> {{ user?user.email:'' }}</a>
+                  <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> {{ user?user.email:'' }}</a>
                 </p>
-                <div class="row">
-                <div class="col-md-6">
+                <!-- <div class="row"> -->
+                  <!-- <div class="col-md-12">
                     <div class="d-flex justify-content-center mb-2">
-                    <router-link to="/login" class="btn btn-primary w-100"><span><i class="fa fa-pencil" aria-hidden="true"></i>  Update</span></router-link>
-                </div>
-                </div>
-                <div class="col-md-6">
-                 <div class="d-flex justify-content-center mb-2">
-                  <router-link to="/login" class="btn btn-danger w-100"><span><i class="fa fa-pencil" aria-hidden="true"></i>  Password Changes</span></router-link>
-                </div>
-                </div>
-                </div>
+                      <router-link to="/updateprofile" class="btn btn-primary w-20"><span><i class="fa fa-pencil" aria-hidden="true"></i>  Update</span></router-link>
+                    </div>
+                  </div> -->
+                  <!-- <div class="col-md-6">
+                    <div class="d-flex justify-content-center mb-2">
+                      <router-link to="/login" class="btn btn-danger w-100"><span><i class="fa fa-pencil" aria-hidden="true"></i>  Password Changes</span></router-link>
+                    </div>
+                  </div> -->
+                <!-- </div> -->
 
               </div>
             </div>
@@ -119,13 +119,13 @@ import Headbar from '@/views/layouts/Headbar.vue'
 import Footer from '@/views/layouts/Footer.vue'
 import SildeBar from '@/views/myaccount/SildeBar.vue'
 import { getLocalStorage } from '@/store/service'
-import //   BContainer,
-//   BRow,
-//   BCol,
-//   BForm,
-//   BFormGroup,
-//   BFormInput
-'bootstrap-vue'
+// import //   BContainer,
+// //   BRow,
+// //   BCol,
+// //   BForm,
+// //   BFormGroup,
+// //   BFormInput
+// 'bootstrap-vue'
 export default {
   components: {
     Headbar,
@@ -149,9 +149,14 @@ export default {
   methods: {
     userData () {
       this.user = getLocalStorage('userData')
+      if ((typeof this.user.role !== 'undefined')) {
+        if (this.user.role === 'table') {
+          this.$router.push('/myorder')
+        }
+      }
     }
   },
-  name: 'checkout'
+  name: 'MyAccount'
 }
 </script>
 <style>
@@ -183,22 +188,11 @@ a.text-left.active {
     color: #ddae71;
     font-family: 'Raleway';
 }
-</style>
-<style>
-h1.mb-0 {
-    color: #383c40;
-    font-family: Helvetica Neue, Raleway, sans-serif;
+.card {
+    width: 100% !important;
+    background: #F06292;
+    border-radius: 15px;
+    border: none;
+    margin-top: 5% !important;
 }
-.page-title h1 {
-    font-size: 77px;
-    font-size: 5.5rem;
-}
-.mb-0, .my-0 {
-    margin-bottom: 0 !important;
-}
-.text-muted {
-    color:#a4a7a9 !important;
-    font-family: Helvetica Neue, Raleway, sans-serif;
-}
-
 </style>

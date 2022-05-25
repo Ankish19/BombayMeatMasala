@@ -8,8 +8,8 @@
       <div class="page-title bg-light">
         <div class="container">
           <div class="row">
-            <div class="col-lg-12">
-              <h1 class="mb-0">Menu</h1>
+            <div class="col-lg-12 mt-6">
+              <h1 class="mb-0 font-weight-800">Menu</h1>
               <h4 class="text-muted mb-0">
                 Some information about our restaurant
               </h4>
@@ -161,6 +161,9 @@ export default {
 }
 #nav-toggle {
     display: none !important;
+}
+.col-lg-12.mt-6 {
+    margin-top: 57px;
 }
 
 @media only screen and (min-width: 500px) {
