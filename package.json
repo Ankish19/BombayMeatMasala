@@ -1,70 +1,69 @@
 {
-  "name": "Bombay-Meat-Masala",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "@googlemaps/js-api-loader": "^1.12.12",
-    "axios": "^0.24.0",
-    "bootstrap-vue": "^2.21.2",
-    "core-js": "^3.6.5",
-    "jquery": "^3.6.0",
-    "moment": "^2.29.1",
-    "register-service-worker": "^1.7.1",
-    "validations": "^0.1.3",
-    "vee-validate": "^3.4.14",
-    "velocity-animate": "^1.5.2",
-    "vue": "^2.6.11",
-    "vue-google-autocomplete": "^1.1.2",
-    "vue-notification": "^1.3.20",
-    "vue-router": "^3.2.0",
-    "vue-toast-notification": "^0.6.2",
-    "vue-toastification": "^1.7.14",
-    "vue2-google-maps": "^0.10.7",
-    "vue2-notify": "^1.4.0",
-    "vuex": "^3.4.0",
-    "yup": "^0.32.11"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-pwa": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-plugin-vuex": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/eslint-config-standard": "^5.1.2",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^6.2.2",
-    "node-sass": "^4.12.0",
-    "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
+    "name": "Bombay-Meat-Masala",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint"
     },
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/standard"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
+    "dependencies": {
+        "@googlemaps/js-api-loader": "^1.12.12",
+        "axios": "^0.24.0",
+        "bootstrap-vue": "^2.21.2",
+        "core-js": "^3.6.5",
+        "jquery": "^3.6.0",
+        "moment": "^2.29.1",
+        "register-service-worker": "^1.7.1",
+        "validations": "^0.1.3",
+        "vee-validate": "^3.4.14",
+        "velocity-animate": "^1.5.2",
+        "vue": "^2.6.11",
+        "vue-google-autocomplete": "^1.1.2",
+        "vue-notification": "^1.3.20",
+        "vue-router": "^3.2.0",
+        "vue-toast-notification": "^0.6.2",
+        "vue-toastification": "^1.7.14",
+        "vue2-google-maps": "^0.10.7",
+        "vue2-notify": "^1.4.0",
+        "vuex": "^3.4.0",
+        "yup": "^0.32.11"
     },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "~4.5.0",
+        "@vue/cli-plugin-pwa": "~4.5.0",
+        "@vue/cli-plugin-router": "~4.5.0",
+        "@vue/cli-plugin-vuex": "~4.5.0",
+        "@vue/cli-service": "~4.5.0",
+        "@vue/eslint-config-standard": "^5.1.2",
+        "babel-eslint": "^10.1.0",
+        "eslint": "^6.7.2",
+        "eslint-plugin-import": "^2.20.2",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.0",
+        "eslint-plugin-vue": "^6.2.2",
+        "node-sass": "^4.12.0",
+        "sass-loader": "^8.0.2",
+        "vue-template-compiler": "^2.6.11"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/essential",
+            "@vue/standard"
+        ],
+        "parserOptions": {
+            "parser": "babel-eslint"
+        },
+        "rules": {}
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
+    ]
 }

@@ -30,10 +30,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>-->
-      <div class="module module-nav-toggle mobile-menu" id="nav-toggle"
+      <div
+        class="module module-nav-toggle mobile-menu"
+        id="nav-toggle"
         data-toggle="collapse"
         data-target="#collapsable-nav"
-        aria-expanded="false">
+        aria-expanded="false"
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -45,7 +48,11 @@
           <div class="row no-gutters">
             <div class="col-md-3 left-bar-fixed text-left" id="collapsable-nav">
               <!-- Menu Navigation -->
-              <nav id="menu-navigation" class="stick-to-content"  @scroll="data-local-scroll">
+              <nav
+                id="menu-navigation"
+                class="stick-to-content"
+                @scroll="data - local - scroll"
+              >
                 <ul class="nav nav-menu bg-dark dark">
                   <li v-for="(item, value, index) in Items" :key="index">
                     <a :href="`#${value}`" class="menu-link">{{ value }}</a>
@@ -58,7 +65,10 @@
             </div>
             <div class="col-md-9 box-line">
               <!-- Menu Category / Burgers -->
-              <MenuComp :items="Items" v-on:addItem="addItem($event)"></MenuComp>
+              <MenuComp
+                :items="Items"
+                v-on:addItem="addItem($event)"
+              ></MenuComp>
             </div>
           </div>
         </div>
@@ -66,62 +76,63 @@
     </div>
     <!-- Content / End -->
 
-    <Footer :newCart="newCart" v-on:opencartpopup="opencartpopup($event)"></Footer>
+    <Footer
+      :newCart="newCart"
+      v-on:opencartpopup="opencartpopup($event)"
+    ></Footer>
     <!-- Modal / Product -->
   </div>
 </template>
 <script>
-import Headbar from '@/views/layouts/Headbar.vue'
-import Footer from '@/views/layouts/Footer.vue'
-import { getMenu } from '@/store/api'
-import MenuComp from '@/views/layouts/MenuComp.vue'
+import Headbar from "@/views/layouts/Headbar.vue";
+import Footer from "@/views/layouts/Footer.vue";
+import { getMenu } from "@/store/api";
+import MenuComp from "@/views/layouts/MenuComp.vue";
 export default {
-  props: {
-  },
-  name: 'Menu',
+  props: {},
+  name: "Menu",
   components: {
     Headbar,
     Footer,
-    MenuComp
+    MenuComp,
   },
-  data () {
+  data() {
     return {
       Items: [],
       newCart: [],
-      cartshow: false
-    }
+      cartshow: false,
+    };
   },
-  mounted () {
+  mounted() {
     // eslint-disable-next-line no-unused-expressions
     getMenu().then((res) => {
       // console.log(res.data['items']['Fast food'])
-      let arr = []
-      arr = res.data.items
+      let arr = [];
+      arr = res.data.items;
 
       Object.keys(arr).map((e) => {
-        console.log(res.data.items[e][0].price)
-      })
+        console.log(res.data.items[e][0].price);
+      });
 
       // Object.keys(res.data.items).map((item) => (
       //     console.log(item)
       // ));
 
-      console.log(arr)
-      this.Items = res.data.items
-    // eslint-disable-next-line no-sequences
-    })
+      console.log(arr);
+      this.Items = res.data.items;
+      // eslint-disable-next-line no-sequences
+    });
   },
   methods: {
-    addItem (event) {
-      this.newCart = event
+    addItem(event) {
+      this.newCart = event;
     },
-    opencartpopup (event) {
+    opencartpopup(event) {
       // this.cartshow = !this.cartshow
-      console.log(event)
-    }
-  }
-}
-
+      console.log(event);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -141,41 +152,42 @@ export default {
 //     position: relative;
 //     left:350px;
 // }
-.menu{
- scroll-behavior: smooth;
- }
- h1.mb-0 {
-    color: #383c40;
-    font-family: Helvetica Neue, Raleway, sans-serif;
+.menu {
+  scroll-behavior: smooth;
 }
+//  h1.mb-0 {
+//     color: #383c40;
+//     font-family: Helvetica Neue, Raleway, sans-serif;
+// }
 .page-title h1 {
-    font-size: 77px;
-    font-size: 5.5rem;
+  font-size: 77px;
+  font-size: 5.5rem;
 }
-.mb-0, .my-0 {
-    margin-bottom: 0 !important;
+.mb-0,
+.my-0 {
+  margin-bottom: 0 !important;
 }
-.text-muted {
-    color:#a4a7a9 !important;
-    font-family: Helvetica Neue, Raleway, sans-serif;
-}
+// .text-muted {
+//   color: #a4a7a9 !important;
+//   font-family: Helvetica Neue, Raleway, sans-serif;
+// }
 #nav-toggle {
-    display: none !important;
+  display: none !important;
 }
 .col-lg-12.mt-6 {
-    margin-top: 57px;
+  margin-top: 57px;
 }
 
 @media only screen and (min-width: 500px) {
-div#collapsable-nav {
+  div#collapsable-nav {
     display: block !important;
-}
+  }
 }
 
 @media only screen and (max-width: 460px) {
-#nav-toggle {
+  #nav-toggle {
     display: block !important;
-    margin:15px;
-}
+    margin: 15px;
+  }
 }
 </style>
