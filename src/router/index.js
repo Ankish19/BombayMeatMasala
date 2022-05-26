@@ -132,8 +132,8 @@ router.beforeEach((to, _, next) => {
   if (userData) {
     if (to.path === '/login' || to.path === '/register' || to.path === '' || to.path === '/forget' || to.path === '/reset-password') {
       return next('/')
-    } else if (userData.verified_at === null || userDataVerify === 'false') {
-      if (to.path !== '/otpverify') {
+    } else if (userData.verified_at === null || userDataVerify === false) {
+      if (to.path !== '/otpverify' || to.path === '/myaccount' || to.path === '/checkout' || to.path === '/editcart' || to.path === '/ManageAddress' || to.path === '/addmanageaddress' || to.path === '/myorder' || to.path === '/wallet') {
         // console.log(userData.verified_at)
         const form = {
           email: userData.email,
