@@ -68,7 +68,7 @@
 import Headbar from '@/views/layouts/Headbar.vue'
 import Footer from '@/views/layouts/Footer.vue'
 import { getLocalStorage, saveLocalStorage } from '@/store/service'
-import { verifyOtp, resendVerifyOtp } from '@/store/api'
+import { verifyOtp, resendVerifyOtp, storeSlug } from '@/store/api'
 import {
   BForm,
   BFormGroup,
@@ -96,7 +96,8 @@ export default {
       form: {
         email: getLocalStorage('userData').email,
         phone: getLocalStorage('userData').phone,
-        otp: ''
+        otp: '',
+        storeSlug: storeSlug
       }
     }
   },
