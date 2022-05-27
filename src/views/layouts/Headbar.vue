@@ -22,14 +22,14 @@
                   <router-link
                     class="has-dropdown text-left mr-3"
                     to="/login"
-                    v-if="!user || user && userVerify == false"
+                    v-if="!user || (user && userVerify == false)"
                   >
                     <span class="order">Login</span></router-link
                   >
                   <router-link
                     class="has-dropdown text-left mr-3"
                     to="/myaccount"
-                    v-if="user && userVerify == true"
+                    v-if="user && userVerify == 'true'"
                   >
                     <span class="order">My Account</span></router-link
                   >
@@ -40,14 +40,14 @@
               <router-link
                 class="btn btn-outline-light"
                 to="/login"
-                v-if="!user || user && userVerify == false"
+                v-if="!user || (user && userVerify == false)"
               >
                 <span class="order">Login</span></router-link
               >
               <router-link
                 class="btn btn-outline-light"
                 to="/myaccount"
-                v-if="user && userVerify == true"
+                v-if="user && userVerify == 'true'"
               >
                 <span class="order">My Account</span></router-link
               >

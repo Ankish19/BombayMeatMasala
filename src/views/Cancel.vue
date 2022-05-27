@@ -4,10 +4,10 @@
     <!-- Content -->
     <div id="content">
       <!-- Page Title -->
-      <section class="section section-bg-edge text-left">
+      <section class="section section-bg-edge text-left mt-5 mb-5 mx-auto">
         <div class="container mt-5 mb-5">
           <div class="row">
-            <div class="col-md-12 text-center">
+            <div class="col-md-12 text-center mt-5">
               <img src="@/assets/cancel.png" alt="" />
             </div>
             <div class="col-md-12 mt-5">
@@ -22,15 +22,15 @@
   </div>
 </template>
 <script>
-import Headbar from '@/views/layouts/Headbar.vue'
-import Footer from '@/views/layouts/Footer.vue'
+import Headbar from "@/views/layouts/Headbar.vue";
+import Footer from "@/views/layouts/Footer.vue";
 
 export default {
   methods: {},
-  name: 'cancel',
+  name: "cancel",
   components: {
     Headbar,
-    Footer
-  }
-}
+    Footer,
+  },
+};
 </script>
