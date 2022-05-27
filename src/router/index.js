@@ -116,6 +116,21 @@ const routes = [
     path: '/table-login/:table',
     name: 'tableLogin',
     component: () => import('../views/Table_login.vue')
+  },
+  {
+    path: '/success',
+    name: 'success',
+    component: () => import('../views/Success.vue')
+  },
+  {
+    path: '/failure',
+    name: 'failure',
+    component: () => import('../views/Failure.vue')
+  },
+  {
+    path: '/cancel',
+    name: 'cancel',
+    component: () => import('../views/Cancel.vue')
   }
 ]
 
