@@ -22,14 +22,14 @@
                   <router-link
                     class="has-dropdown text-left mr-3"
                     to="/login"
-                    v-if="!user"
+                    v-if="!user || user && userVerify == false"
                   >
                     <span class="order">Login</span></router-link
                   >
                   <router-link
                     class="has-dropdown text-left mr-3"
                     to="/myaccount"
-                    v-if="user"
+                    v-if="user && userVerify == true"
                   >
                     <span class="order">My Account</span></router-link
                   >
@@ -40,14 +40,14 @@
               <router-link
                 class="btn btn-outline-light"
                 to="/login"
-                v-if="!user"
+                v-if="!user || user && userVerify == false"
               >
                 <span class="order">Login</span></router-link
               >
               <router-link
                 class="btn btn-outline-light"
                 to="/myaccount"
-                v-if="user"
+                v-if="user && userVerify == true"
               >
                 <span class="order">My Account</span></router-link
               >
@@ -107,7 +107,7 @@
       <div class="module module-social">
         <h6 class="text-sm mb-3">Follow Us!</h6>
         <a
-          href="https://www.facebook.com/BombayMeatMasala/?ref=pages_you_manage"
+          href="https://www.facebook.com/BombayMeatMasala/?ref=pages_you_managezc cz"
           class="icon icon-social icon-circle icon-sm icon-facebook"
           ><i class="fa fa-facebook"></i></a
         >&nbsp;

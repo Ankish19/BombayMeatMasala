@@ -57,7 +57,7 @@
 <script>
 import Headbar from '@/views/layouts/Headbar.vue'
 import Footer from '@/views/layouts/Footer.vue'
-import { sendPasswordResetMail } from '@/store/api'
+import { sendPasswordResetMail, storeSlug } from '@/store/api'
 import {
   BForm,
   BFormGroup,
@@ -83,7 +83,8 @@ export default {
   data () {
     return {
       form: {
-        email: ''
+        email: '',
+        storeSlug: storeSlug
       }
     }
   },

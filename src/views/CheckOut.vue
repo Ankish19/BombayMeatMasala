@@ -298,10 +298,10 @@
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description ml-2">Wallet Balance <br/>${{ wallet.balance?wallet.balance.toFixed(2):0 }}</span>
                                     </label>
-                                    <label class="custom-control custom-radio" v-if="submitOrder.user.data.role === 'table'">
+                                    <label class="custom-control custom-radio">
                                         <input type="radio" name="payment_type" checked  value="COD" v-model="submitOrder.method" @change="selectMethod($event)">
                                         <span class="custom-control-indicator"></span>
-                                        <span class="custom-control-description ml-2">Pay Later</span>
+                                        <span class="custom-control-description ml-2">COD</span>
                                     </label>
                                     <label class="custom-control custom-radio">
                                         <input type="radio" name="payment_type" checked  value="CARD" v-model="submitOrder.method" @change="selectMethod($event)">
