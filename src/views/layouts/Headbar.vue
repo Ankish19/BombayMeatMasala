@@ -233,103 +233,105 @@
 </template>
 
 <script>
-import { getSettings } from "@/store/api";
-import { getLocalStorage, tipTax } from "@/store/service";
+import { getSettings } from '@/store/api'
+import { getLocalStorage, tipTax } from '@/store/service'
 export default {
-  name: "header",
-  props: ["newCart", "cartshow"],
-  data() {
+  name: 'header',
+  props: ['newCart', 'cartshow'],
+  data () {
     return {
       user: [],
-      classSlider: "hide",
+      userVerify: '',
+      classSlider: 'hide',
       item: [],
       tipTax: {
         tips: {},
-        taxPercentage: {},
+        taxPercentage: {}
       },
       orderTotal: 0,
       taxes: [],
       taxTotal: 0,
-      totalAmount: 0,
-    };
+      totalAmount: 0
+    }
   },
   watch: {
-    newCart() {
+    newCart () {
       if (this.newCart) {
-        this.item = this.newCart;
-        this.orderTotal = 0;
-        this.taxTotal = 0;
-        this.totalAmount = 0;
-        this.getCalc();
+        this.item = this.newCart
+        this.orderTotal = 0
+        this.taxTotal = 0
+        this.totalAmount = 0
+        this.getCalc()
       }
     },
-    cartshow() {
-      this.slideMinicart(this.cartshow ? "show" : "hide");
-    },
+    cartshow () {
+      this.slideMinicart(this.cartshow ? 'show' : 'hide')
+    }
   },
-  mounted() {
-    this.getSetting();
-    this.showItem();
-    this.getCalc();
+  mounted () {
+    this.getSetting()
+    this.showItem()
+    this.getCalc()
   },
   methods: {
-    showItem() {
-      this.user = getLocalStorage("userData");
-      this.item = getLocalStorage("cart");
+    showItem () {
+      this.user = getLocalStorage('userData')
+      this.userVerify = getLocalStorage('userDataVerify')
+      this.item = getLocalStorage('cart')
     },
-    slideMinicart(event) {
-      if (event === "hide") {
-        this.classSlider = "show";
+    slideMinicart (event) {
+      if (event === 'hide') {
+        this.classSlider = 'show'
       } else {
-        this.classSlider = "hide";
+        this.classSlider = 'hide'
       }
     },
-    deleteItem(index) {
-      var storedNames = JSON.parse(localStorage.getItem("cart"));
-      var name = [];
+    deleteItem (index) {
+      var storedNames = JSON.parse(localStorage.getItem('cart'))
+      var name = []
       // var name = storedNames.slice(index, 1)
       // localStorage.setItem('cart', JSON.stringify(name))
       for (var j = 0; j < storedNames.length; j++) {
         if (j !== index) {
-          name.push(storedNames[j]);
+          name.push(storedNames[j])
         }
       }
-      localStorage.removeItem("cart");
-      localStorage.setItem("cart", JSON.stringify(name));
-      this.showItem();
-      this.orderTotal = 0;
-      this.getCalc();
+      localStorage.removeItem('cart')
+      localStorage.setItem('cart', JSON.stringify(name))
+      this.showItem()
+      this.orderTotal = 0
+      this.getCalc()
     },
-    getSetting() {
+    getSetting () {
       getSettings().then((res) => {
-        this.tipTax.taxPercentage = res.data[45];
-        this.tipTax.tips = res.data[109];
-        tipTax("taxes", JSON.stringify(this.tipTax));
-      });
+        this.tipTax.taxPercentage = res.data[45]
+        this.tipTax.tips = res.data[109]
+        tipTax('taxes', JSON.stringify(this.tipTax))
+      })
     },
-    getCalc() {
-      this.taxes = getLocalStorage("taxes");
+    getCalc () {
+      this.taxes = getLocalStorage('taxes')
       if (this.item) {
         for (var i = 0; i < this.item.length; i++) {
           if (this.item[i].addOnTotal) {
             this.orderTotal +=
               parseInt(this.item[i].quantity) *
-              parseFloat(this.item[i].addOnTotal);
+              parseFloat(this.item[i].addOnTotal)
           } else {
             this.orderTotal +=
-              parseInt(this.item[i].quantity) * parseFloat(this.item[i].price);
+              parseInt(this.item[i].quantity) * parseFloat(this.item[i].price)
           }
         }
       }
       this.taxTotal =
         (parseFloat(this.orderTotal) *
           parseInt(this.taxes.taxPercentage.value)) /
-        100;
+        100
       this.totalAmount =
-        parseFloat(this.orderTotal) + parseFloat(this.taxTotal);
-    },
-  },
-};
+        parseFloat(this.orderTotal) + parseFloat(this.taxTotal)
+    }
+  }
+}
 </script>
 
 <style>
