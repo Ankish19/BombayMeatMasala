@@ -20,7 +20,7 @@ export default {
         .then(res => {
           console.log(res.data)
           saveLocalStorage('userData', JSON.stringify(res.data.data))
-          saveLocalStorage('userDataVerify', res.data.data.verified_at ? 'true' : 'false')
+          saveLocalStorage('userDataVerify', 'true')
           this.$router.push('/menu')
         })
     }

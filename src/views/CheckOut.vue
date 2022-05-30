@@ -384,7 +384,7 @@
 </template>
 <script>
 import { getRestaurantInfo, getAddresses, getSettings, checkCoupon, CardToken, getUserWallet, placeOrder } from '@/store/api'
-import { getLocalStorage } from '@/store/service'
+import { getLocalStorage, saveLocalStorage } from '@/store/service'
 import Headbar from '@/views/layouts/Headbar.vue'
 import Footer from '@/views/layouts/Footer.vue'
 
@@ -620,6 +620,7 @@ export default {
       if (this.submitOrder.user.data.role === 'table' && (!this.form.tableOrder.name || !this.form.tableOrder.phone || !this.form.tableOrder.person)) {
         this.tableOrder.error = '*All Fields are required.'
       } else {
+        saveLocalStorage('submitOrder', JSON.stringify(this.submitOrder))
         // const card = {
         //   ecomind: 'ecom',
         //   amount: '3000',

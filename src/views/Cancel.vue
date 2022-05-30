@@ -31,6 +31,9 @@ export default {
   components: {
     Headbar,
     Footer
+  },
+  mounted () {
+    localStorage.removeItem('submitOrder')
   }
 }
 </script>

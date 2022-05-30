@@ -24,13 +24,43 @@
 <script>
 import Headbar from '@/views/layouts/Headbar.vue'
 import Footer from '@/views/layouts/Footer.vue'
+import { placeOrder } from '@/store/api'
+import { getLocalStorage } from '@/store/service'
 
 export default {
-  methods: {},
   name: 'ordersuccess',
   components: {
     Headbar,
     Footer
+  },
+  data () {
+    return {
+      showSuccess: 0,
+      interval: ''
+    }
+  },
+  mounted () {
+    if (getLocalStorage('submitOrder') && getLocalStorage('submitOrder').method === 'Clover') {
+      this.placeOrder()
+    } else {
+      this.$router.push('/menu')
+    }
+  },
+  methods: {
+    placeOrder () {
+      placeOrder(getLocalStorage('submitOrder')).then(res => {
+        if (res.data.success === true) {
+          localStorage.removeItem('cart')
+          localStorage.removeItem('submitOrder')
+          this.showSuccess = 1
+        }
+        this.$toast.success('Order place successfully')
+        clearInterval(this.interval)
+        // this.interval = setInterval(() => {
+        //   this.$router.push('/myorder')
+        // }, 10000)
+      })
+    }
   }
 }
 </script>
