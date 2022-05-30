@@ -7,7 +7,9 @@ import store from './store'
 import { getGoogleApi } from './store/api'
 import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
+import JwPagination from 'jw-vue-pagination'
 
+Vue.component('jw-pagination', JwPagination)
 Vue.config.productionTip = false
 
 Vue.use(VueGoogleMaps, {
