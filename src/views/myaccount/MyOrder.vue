@@ -127,7 +127,7 @@
 import Headbar from '@/views/layouts/Headbar.vue'
 import Footer from '@/views/layouts/Footer.vue'
 import SildeBar from '@/views/myaccount/SildeBar.vue'
-import { getOrders } from '@/store/api'
+import { getOrders, storeSlug } from '@/store/api'
 import { getLocalStorage } from '@/store/service'
 
 export default {
@@ -147,7 +147,8 @@ export default {
     return {
       form: {
         value: '',
-        page: ''
+        page: '',
+        storeSlug: storeSlug
       },
       interval: '',
       orders: [],
