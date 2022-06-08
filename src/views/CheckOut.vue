@@ -808,6 +808,7 @@ export default {
       }
     },
     placeOrder () {
+      this.orderNow = 0
       if (this.submitOrder.delivery_type === 3) {
         this.submitOrder.order_comment = `Name: ${this.form.tableOrder.name}, Phone: ${this.form.tableOrder.phone}, Number of person: ${this.form.tableOrder.person}`
       }
