@@ -478,8 +478,16 @@ export default {
     getUserWallet(data).then(res => {
       this.wallet = res.data
     })
+    this.getTableOrderInfo()
   },
   methods: {
+    getTableOrderInfo () {
+      if (getLocalStorage('tableOrder')) {
+        this.form.tableOrder.name = getLocalStorage('tableOrder').name
+        this.form.tableOrder.phone = getLocalStorage('tableOrder').phone
+        this.form.tableOrder.person = getLocalStorage('tableOrder').person
+      }
+    },
     getResInfo () {
       getRestaurantInfo().then(res => {
         this.storeInfo = res.data
@@ -620,6 +628,8 @@ export default {
       if (this.submitOrder.user.data.role === 'table' && (!this.form.tableOrder.name || !this.form.tableOrder.phone || !this.form.tableOrder.person)) {
         this.tableOrder.error = '*All Fields are required.'
       } else {
+        localStorage.removeItem('tableOrder')
+        saveLocalStorage('tableOrder', JSON.stringify(this.form.tableOrder))
         saveLocalStorage('submitOrder', JSON.stringify(this.submitOrder))
         // const card = {
         //   ecomind: 'ecom',
@@ -815,6 +825,8 @@ export default {
       if (this.submitOrder.user.data.role === 'table' && (!this.form.tableOrder.name || !this.form.tableOrder.phone || !this.form.tableOrder.person)) {
         this.tableOrder.error = '*All Fields are required.'
       } else {
+        localStorage.removeItem('tableOrder')
+        saveLocalStorage('tableOrder', JSON.stringify(this.form.tableOrder))
         placeOrder(this.submitOrder).then(res => {
           if (res.data.success === true) {
             localStorage.removeItem('cart')
