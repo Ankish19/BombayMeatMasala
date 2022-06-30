@@ -97,16 +97,17 @@
   </div>
 </template>
 <script>
-import Headbar from "@/views/layouts/Headbar.vue";
-import Footer from "@/views/layouts/Footer.vue";
-import { getRestaurantInfo } from "@/store/api";
-import { getLocalStorage } from "@/store/service";
+import Headbar from '@/views/layouts/Headbar.vue'
+import Footer from '@/views/layouts/Footer.vue'
+import { getRestaurantInfo } from '@/store/api'
+import { getLocalStorage } from '@/store/service'
 
 export default {
   components: { Headbar, Footer },
-  name: "Editcart",
-  data() {
+  name: 'Editcart',
+  data () {
     return {
+      showButton: null,
       add_quantity: [],
       deliveryCharges: 0,
       tipBox: 0,
@@ -114,23 +115,23 @@ export default {
       addresses: [],
       amount: 0,
       form: {
-        name: "",
-        lastName: "",
-        address: "",
-        email: "",
-        phone: "",
-        street: "",
-        coupon: "",
+        name: '',
+        lastName: '',
+        address: '',
+        email: '',
+        phone: '',
+        street: '',
+        coupon: ''
       },
-      couponDetail: "",
+      couponDetail: '',
       discountPrice: 0,
       discountPercent: 0,
-      discountLimit: "",
+      discountLimit: '',
       item: [],
       tipTax: {
         tips: {},
         taxPercentage: {},
-        tipsvalue: [],
+        tipsvalue: []
       },
       delivery_amount: 0,
       customTip: false,
@@ -139,149 +140,178 @@ export default {
       taxes: [],
       taxTotal: 0,
       totalAmount: 0,
-      storeInfo: "",
-      delivery_type: "",
+      storeInfo: '',
+      delivery_type: '',
       submitOrder: {
         user: {
-          data: "",
+          data: ''
         },
         order: [],
-        coupon: "",
+        coupon: '',
         quantity: 0,
         location: {
-          lat: "",
-          lng: "",
-          address: "",
+          lat: '',
+          lng: '',
+          address: '',
           house: null,
-          tag: null,
+          tag: null
         },
         order_comment: null,
         total: {
-          productQuantity: "",
-          totalPrice: "",
-          tip_to_driver: "",
+          productQuantity: '',
+          totalPrice: '',
+          tip_to_driver: ''
         },
-        method: "COD",
-        payment_token: "",
-        delivery_type: "",
-        partial_wallet: "",
+        method: 'COD',
+        payment_token: '',
+        delivery_type: '',
+        partial_wallet: '',
         dis: 0,
-        pending_payment: "",
-        tipAmount: 0,
-      },
-    };
+        pending_payment: '',
+        tipAmount: 0
+      }
+    }
   },
-  mounted() {
+  mounted () {
+    this.user = getLocalStorage('userData')
     getRestaurantInfo().then((res) => {
-      this.storeInfo = res.data;
-    });
-    this.checkCart();
+      this.storeInfo = res.data
+      if (!this.user) {
+        if (this.storeInfo.open === 1) {
+          this.showButton = true
+        } else {
+          this.showButton = false
+        }
+      } else {
+        if (this.user && !this.user.role) {
+          console.log('user')
+          if (this.storeInfo.open === 1) {
+            this.showButton = true
+          } else {
+            this.showButton = false
+          }
+        } else {
+          if (this.storeInfo.table_order_open === 1) {
+            this.showButton = true
+          } else {
+            this.showButton = false
+          }
+        }
+        if (this.showButton === false) {
+          this.$toast.error('Restaurant is now closed.', {
+            timeout: 1500
+          })
+          this.$router.push('/')
+        }
+      }
+    })
+    this.checkCart()
   },
   methods: {
-    checkCart() {
-      if (getLocalStorage("cart") && getLocalStorage("cart").length > 0) {
-        this.showItem();
+    checkCart () {
+      if (getLocalStorage('cart') && getLocalStorage('cart').length > 0) {
+        this.showItem()
       } else {
-        this.$router.push("/menu");
+        this.$router.push('/')
       }
     },
-    cartUpdate() {
-      var storedNames = JSON.parse(localStorage.getItem("cart"));
-      var name = [];
+    cartUpdate () {
+      var storedNames = JSON.parse(localStorage.getItem('cart'))
+      var name = []
       for (var j = 0; j < storedNames.length; j++) {
-        if (this.add_quantity[j] === "0") {
-          console.log(this.add_quantity[j]);
-          storedNames[j].quantity = 1;
+        if (this.add_quantity[j] === '0') {
+          console.log(this.add_quantity[j])
+          storedNames[j].quantity = 1
           // name.push(storedNames[j])
         } else {
-          storedNames[j].quantity = this.add_quantity[j];
-          name.push(storedNames[j]);
+          storedNames[j].quantity = this.add_quantity[j]
+          name.push(storedNames[j])
         }
       }
-      localStorage.removeItem("cart");
-      localStorage.setItem("cart", JSON.stringify(name));
-      this.$toast.success("Order updated successfully");
-      this.$router.push("/checkout");
+      localStorage.removeItem('cart')
+      localStorage.setItem('cart', JSON.stringify(name))
+      this.$toast.success('Order updated successfully')
+      this.$router.push('/checkout')
     },
-    addQuantity(index) {
-      var storedNames = JSON.parse(localStorage.getItem("cart"));
-      var name = [];
+    addQuantity (index) {
+      var storedNames = JSON.parse(localStorage.getItem('cart'))
+      var name = []
       for (var j = 0; j < storedNames.length; j++) {
         if (j === index) {
-          this.add_quantity[index] = storedNames[index].quantity++;
-          name.push(storedNames[j]);
+          this.add_quantity[index] = storedNames[index].quantity++
+          name.push(storedNames[j])
         } else {
-          name.push(storedNames[j]);
+          name.push(storedNames[j])
         }
       }
-      localStorage.removeItem("cart");
-      localStorage.setItem("cart", JSON.stringify(name));
-      this.showItem();
+      localStorage.removeItem('cart')
+      localStorage.setItem('cart', JSON.stringify(name))
+      this.showItem()
     },
-    minusQuantity(item, index) {
+    minusQuantity (item, index) {
       if (item.quantity > 1) {
-        var storedNames = JSON.parse(localStorage.getItem("cart"));
-        var name = [];
+        var storedNames = JSON.parse(localStorage.getItem('cart'))
+        var name = []
         // var name = storedNames.slice(index, 1)
         // localStorage.setItem('cart', JSON.stringify(name))
         for (var j = 0; j < storedNames.length; j++) {
           if (j === index) {
-            this.add_quantity[index] = storedNames[index].quantity--;
-            name.push(storedNames[j]);
+            this.add_quantity[index] = storedNames[index].quantity--
+            name.push(storedNames[j])
           } else {
-            name.push(storedNames[j]);
+            name.push(storedNames[j])
           }
         }
-        localStorage.removeItem("cart");
-        localStorage.setItem("cart", JSON.stringify(name));
-        this.showItem();
+        localStorage.removeItem('cart')
+        localStorage.setItem('cart', JSON.stringify(name))
+        this.showItem()
       }
     },
-    showItem() {
-      this.item = getLocalStorage("cart");
-      this.submitOrder.order = getLocalStorage("cart");
+    showItem () {
+      this.item = getLocalStorage('cart')
+      this.submitOrder.order = getLocalStorage('cart')
       for (var i = 0; i < this.item.length; i++) {
-        this.add_quantity[i] = this.item[i].quantity;
+        this.add_quantity[i] = this.item[i].quantity
       }
     },
-    deleteItem(index) {
-      var storedNames = JSON.parse(localStorage.getItem("cart"));
-      var name = [];
+    deleteItem (index) {
+      var storedNames = JSON.parse(localStorage.getItem('cart'))
+      var name = []
       // var name = storedNames.slice(index, 1)
       // localStorage.setItem('cart', JSON.stringify(name))
       for (var j = 0; j < storedNames.length; j++) {
         if (j !== index) {
-          name.push(storedNames[j]);
+          name.push(storedNames[j])
         }
       }
-      this.$toast.success("An item removed.");
-      localStorage.removeItem("cart");
-      localStorage.setItem("cart", JSON.stringify(name));
-      this.showItem();
-      this.checkCart();
+      this.$toast.success('An item removed.')
+      localStorage.removeItem('cart')
+      localStorage.setItem('cart', JSON.stringify(name))
+      this.showItem()
+      this.checkCart()
     },
-    getUserData() {
-      this.submitOrder.user.data = getLocalStorage("userData");
-      this.form.name = getLocalStorage("userData").name;
-      this.form.email = getLocalStorage("userData").email;
-      this.form.phone = getLocalStorage("userData").phone;
-      this.delivery_type = getLocalStorage("userData").delivery_type;
+    getUserData () {
+      this.submitOrder.user.data = getLocalStorage('userData')
+      this.form.name = getLocalStorage('userData').name
+      this.form.email = getLocalStorage('userData').email
+      this.form.phone = getLocalStorage('userData').phone
+      this.delivery_type = getLocalStorage('userData').delivery_type
 
       // this.submitOrder.delivery_type = getLocalStorage('userData').delivery_type
-      this.submitOrder.total.productQuantity = this.item.length;
+      this.submitOrder.total.productQuantity = this.item.length
       this.submitOrder.location.address =
-        getLocalStorage("userData").default_address.address;
+        getLocalStorage('userData').default_address.address
       this.submitOrder.location.house =
-        getLocalStorage("userData").default_address.house;
+        getLocalStorage('userData').default_address.house
       this.submitOrder.location.lat =
-        getLocalStorage("userData").default_address.latitude;
+        getLocalStorage('userData').default_address.latitude
       this.submitOrder.location.lng =
-        getLocalStorage("userData").default_address.longitude;
+        getLocalStorage('userData').default_address.longitude
       this.submitOrder.location.tag =
-        getLocalStorage("userData").default_address.tag;
-    },
-  },
-};
+        getLocalStorage('userData').default_address.tag
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

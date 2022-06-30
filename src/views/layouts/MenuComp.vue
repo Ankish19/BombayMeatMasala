@@ -27,13 +27,21 @@
                 data-toggle="modal"
                 data-target="#myModal"
                 @click="openModal(item1)"
+                :disabled="showButton==false"
                 v-if="item1.addon_categories.length > 0"
               >
                 <span>Add to cart</span>
               </button>
-              <button class="btn btn-outline-secondary btn-sm" @click="openModal(item1)" v-else>
+              <button class="btn btn-outline-secondary btn-sm" @click="openModal(item1)" :disabled="showButton==false" v-else>
                 <span>Add to cart</span>
               </button>
+              <br/>
+              <span
+                  v-if="showButton==false"
+                  class="badge badge-danger p-2 mt-3"
+                  style="font-size: 10px; letter-spacing: 2px"
+                  >Restaurant Closed</span
+                >
             </div>
           </div>
         </div>
@@ -181,10 +189,10 @@
   </div>
 </template>
 <script>
-import { addCart, getCart } from '@/store/service'
+import { addCart, getCart, getLocalStorage } from '@/store/service'
 export default {
   setup () { },
-  props: ['items'],
+  props: ['items', 'resInfo'],
   data () {
     return {
       siteLogo: require('../../assets/burges.jpg'),
@@ -198,7 +206,40 @@ export default {
       selectedaddons: [],
       addOnTotal: 0,
       singleAddOnTotal: 0,
-      multiAddOnTotal: 0
+      multiAddOnTotal: 0,
+      user: [],
+      showButton: null
+    }
+  },
+  mounted () {
+    this.user = getLocalStorage('userData')
+  },
+  watch: {
+    resInfo () {
+      console.log(this.resInfo)
+      console.log(`online--------${this.resInfo.open}`)
+      console.log(`table--------${this.resInfo.table_order_open}`)
+      if (!this.user) {
+        if (this.resInfo.open === 1) {
+          this.showButton = true
+        } else {
+          this.showButton = false
+        }
+      } else {
+        if (this.user && !this.user.role) {
+          if (this.resInfo.open === 1) {
+            this.showButton = true
+          } else {
+            this.showButton = false
+          }
+        } else {
+          if (this.resInfo.table_order_open === 1) {
+            this.showButton = true
+          } else {
+            this.showButton = false
+          }
+        }
+      }
     }
   },
   methods: {

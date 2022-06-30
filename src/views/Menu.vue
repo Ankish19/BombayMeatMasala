@@ -68,6 +68,7 @@
               <MenuComp
                 :items="Items"
                 v-on:addItem="addItem($event)"
+                :resInfo="resInfo"
               ></MenuComp>
             </div>
           </div>
@@ -84,55 +85,62 @@
   </div>
 </template>
 <script>
-import Headbar from "@/views/layouts/Headbar.vue";
-import Footer from "@/views/layouts/Footer.vue";
-import { getMenu } from "@/store/api";
-import MenuComp from "@/views/layouts/MenuComp.vue";
+import Headbar from '@/views/layouts/Headbar.vue'
+import Footer from '@/views/layouts/Footer.vue'
+import { getMenu, getRestaurantInfo } from '@/store/api'
+import MenuComp from '@/views/layouts/MenuComp.vue'
 export default {
   props: {},
-  name: "Menu",
+  name: 'Menu',
   components: {
     Headbar,
     Footer,
-    MenuComp,
+    MenuComp
   },
-  data() {
+  data () {
     return {
       Items: [],
       newCart: [],
       cartshow: false,
-    };
+      resInfo: ''
+    }
   },
-  mounted() {
+  mounted () {
     // eslint-disable-next-line no-unused-expressions
+    this.getResInfo()
     getMenu().then((res) => {
       // console.log(res.data['items']['Fast food'])
-      let arr = [];
-      arr = res.data.items;
+      let arr = []
+      arr = res.data.items
 
       Object.keys(arr).map((e) => {
-        console.log(res.data.items[e][0].price);
-      });
+        console.log(res.data.items[e][0].price)
+      })
 
       // Object.keys(res.data.items).map((item) => (
       //     console.log(item)
       // ));
 
-      console.log(arr);
-      this.Items = res.data.items;
+      console.log(arr)
+      this.Items = res.data.items
       // eslint-disable-next-line no-sequences
-    });
+    })
   },
   methods: {
-    addItem(event) {
-      this.newCart = event;
+    getResInfo () {
+      getRestaurantInfo().then((res) => {
+        this.resInfo = res.data
+      })
     },
-    opencartpopup(event) {
+    addItem (event) {
+      this.newCart = event
+    },
+    opencartpopup (event) {
       // this.cartshow = !this.cartshow
-      console.log(event);
-    },
-  },
-};
+      console.log(event)
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

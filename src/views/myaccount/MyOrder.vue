@@ -71,6 +71,7 @@
                             <tr>
                               <th scope="col">Order Id </th>
                               <th scope="col">Description</th>
+                              <th scope="col">Deliver In</th>
                               <th scope="col">Status</th>
                               <th scope="col">Total Price</th>
                             </tr>
@@ -87,6 +88,17 @@
                                 <div class="wh-item-info">
                                   <a href="#" class="font-weight-bold">{{ order.restaurant.name }}</a>
                                   <p><span v-for="orderItems in order.orderitems" :key="orderItems.id">{{ orderItems.name }}, </span></p>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="wh-item-info">
+                                  <p>
+                                    <span v-if="order.orderstatus_id === 5" class="font-weight-bold text-right text-success"> Order Completed</span>
+                                    <span class="font-weight-bold" v-else-if="order.order_timing != null">
+                                      {{ order.order_timing > 1 ? order.order_timing + ' minutes' : order.order_timing + ' hour' }},
+                                    </span>
+                                    <span v-else class="font-weight-bold text-right"> Order is not accepted yet.</span>
+                                  </p>
                                 </div>
                               </td>
                               <td>
@@ -109,6 +121,13 @@
                         <div class="">
                           <jw-pagination :items="orders" @changePage="onChangePage"></jw-pagination>
                         </div>
+                        <audio controls id="audioFile">
+                          <source src="tone.ogg" type="audio/ogg" />
+                          <source
+                            src="../../assets/audio/tone.mp3"
+                            type="audio/mpeg"
+                          />
+                        </audio>
                       </div>
                     </div>
                   </div>
@@ -152,10 +171,13 @@ export default {
       },
       interval: '',
       orders: [],
-      pageOfItems: []
+      pageOfItems: [],
+      oldItems: []
     }
   },
   mounted () {
+    var audio = document.getElementById('audioFile')
+    audio.controls = false
     this.getOrder()
     this.interval = setInterval(() => {
       this.getOrder()
@@ -172,6 +194,25 @@ export default {
     getOrder () {
       getOrders(this.form, getLocalStorage('userData').role).then(res => {
         this.orders = res.data
+        if (this.oldItems.length > 0) {
+          for (let i = 0; i < this.orders.length; i++) {
+            if (
+              this.orders[i].id === this.oldItems[i].id &&
+              this.orders[i].orderstatus_id !== this.oldItems[i].orderstatus_id
+            ) {
+              document.getElementById('audioFile').play()
+              this.$toast.success(
+                this.orders[i].unique_order_id + ' Order status changed.',
+                {
+                  timeout: 1000
+                }
+              )
+            }
+          }
+          this.oldItems = res.data
+        } else {
+          this.oldItems = res.data
+        }
       })
     },
     onPageChange (page) {
